@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MNMX Memory Battle</title>
+  <meta name="description" content="MNMX Memory Battle — flip cards and outsmart the AI opponent.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/board.css">
+  <link rel="stylesheet" href="css/result.css">
+  <link rel="stylesheet" href="css/history.css">
+</head>
+<body>
+
+<div class="page">
+  <h1 class="sr-only">MNMX Memory Battle: flip cards to beat the AI</h1>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-name">MN<span class="accent">M</span><span class="x">X</span></div>
+      <div class="brand-tagline">memory battle</div>
+    </div>
+    <div class="header-controls">
+      <select class="select-diff" id="diff" aria-label="Difficulty">
+        <!-- Populated by app.js -->
+      </select>
+      <button class="btn-new" onclick="Game.start()" aria-label="New game">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="1 4 1 10 7 10"/>
+          <path d="M3.51 15a9 9 0 1 0 .49-3"/>
+        </svg>
+        New game
+      </button>
+    </div>
+  </header>
+
+  <!-- Scoreboard -->
+  <div class="scoreboard" role="region" aria-label="Score">
+    <div class="score-card you" id="you-score-card">
+      <div class="score-who">
+        <span class="score-pip" aria-hidden="true"></span>
+        You
+      </div>
+      <div class="score-number" id="you-score">0</div>
+      <div class="score-sub"  id="you-pairs">0 pairs</div>
+    </div>
+
+    <div class="vs-label" aria-hidden="true">VS</div>
+
+    <div class="score-card ai right" id="ai-score-card">
+      <div class="score-who">
+        MNMX
+        <span class="score-pip" aria-hidden="true"></span>
+      </div>
+      <div class="score-number" id="ai-score">0</div>
+      <div class="score-sub"  id="ai-pairs">0 pairs</div>
+    </div>
+  </div>
+
+  <!-- Turn indicator -->
+  <div class="turn-strip" role="status" aria-live="polite">
+    <div class="turn-pill you" id="turn-pill">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      Your turn
+    </div>
+  </div>
+
+  <!-- Game board -->
+  <div class="board" id="board" role="grid" aria-label="Memory card grid"></div>
+
+  <!-- Result -->
+  <div id="result-banner" class="result-banner hidden" role="alert" aria-live="assertive"></div>
+
+  <!-- History panel -->
+  <section class="history-panel" id="history-panel">
+    <div class="history-header">
+      <div class="history-title">Past Battles</div>
+      <div class="history-summary">
+        <span class="hs-item win"  id="hs-wins">0W</span>
+        <span class="hs-sep">/</span>
+        <span class="hs-item loss" id="hs-losses">0L</span>
+        <span class="hs-sep">/</span>
+        <span class="hs-item draw" id="hs-draws">0D</span>
+        <span class="hs-rate" id="hs-rate"></span>
+      </div>
+      <button class="btn-clear-hist" id="btn-clear-hist">Clear</button>
+    </div>
+    <div class="history-list" id="history-list">
+      <div class="history-empty">No games yet — finish a game to see it here.</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-brand">MN<span>MX</span></div>
+    <div class="footer-note">flip &amp; match &mdash; beat the machine</div>
+  </footer>
+</div>
+
+<!-- Scripts -->
+<script src="js/config.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+<script src="js/app.js"></script>
+<script src="js/history.js"></script>
+
+</body>
+</html>
