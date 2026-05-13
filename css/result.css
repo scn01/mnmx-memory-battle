@@ -8,19 +8,19 @@
   padding: 2rem 1.75rem;
   text-align: center;
   margin-bottom: 1.5rem;
-  border: 1px solid;
+  border: 1px solid transparent;
   position: relative;
   overflow: hidden;
   opacity: 0;
+  transform: scale(0.94) translateY(10px);
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-spring);
+  pointer-events: none;
 }
 
 .result-banner.visible {
-  animation: banner-in 0.4s var(--ease-spring) forwards;
-}
-
-@keyframes banner-in {
-  from { opacity: 0; transform: scale(0.94) translateY(10px); }
-  to   { opacity: 1; transform: none; }
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }
 
 .result-banner::before {
