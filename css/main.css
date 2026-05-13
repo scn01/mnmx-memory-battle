@@ -107,7 +107,7 @@ body::after {
   padding: 2rem 1.25rem 4rem;
 }
 
-/* Typography  */
+/* Typography */
 h1, h2, h3 {
   font-family: var(--font-display);
   letter-spacing: 1px;
@@ -118,7 +118,7 @@ h1, h2, h3 {
   font-family: var(--font-mono);
 }
 
-/* Screen reader only  */
+/* Screen reader only */
 .sr-only {
   position: absolute;
   width: 1px; height: 1px;
