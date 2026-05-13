@@ -1,6 +1,6 @@
-/* 
+/*
    MNMX MEMORY BATTLE — header.css
-   Header, brand, controls, scoreboard, turn pill */
+   Header, brand, controls, scoreboard, turn pill, streak toast */
 
 /* Header */
 .site-header {
@@ -10,6 +10,8 @@
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-1);
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .brand {
@@ -37,14 +39,17 @@
   text-transform: uppercase;
 }
 
-/* Controls row  */
+/* Controls row */
 .header-controls {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.select-diff {
+/* Shared select style */
+.select-diff,
+.select-theme {
   appearance: none;
   background: var(--surface-2);
   border: 1px solid var(--border-2);
@@ -59,16 +64,45 @@
   background-position: right 10px center;
   transition: border-color 0.15s, background 0.15s;
 }
-.select-diff:hover {
+.select-diff:hover,
+.select-theme:hover {
   border-color: var(--border-3);
   background-color: var(--surface-3);
 }
-.select-diff:focus {
+.select-diff:focus,
+.select-theme:focus {
   outline: none;
   border-color: var(--you-400);
 }
 
-/* New game button  */
+/* Hint button */
+.btn-hint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(127,119,221,0.08);
+  border: 1px solid rgba(127,119,221,0.3);
+  border-radius: var(--r-md);
+  color: var(--you-200);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s, opacity 0.15s;
+  white-space: nowrap;
+}
+.btn-hint:hover:not(:disabled) {
+  background: rgba(127,119,221,0.16);
+  border-color: rgba(127,119,221,0.5);
+}
+.btn-hint:active:not(:disabled) { transform: scale(0.96); }
+.btn-hint:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* New game button */
 .btn-new {
   display: flex;
   align-items: center;
@@ -93,7 +127,7 @@
 }
 .btn-new:hover svg { transform: rotate(-180deg); }
 
-/*  Scoreboard  */
+/* Scoreboard */
 .scoreboard {
   display: grid;
   grid-template-columns: 1fr 40px 1fr;
@@ -175,15 +209,18 @@
   letter-spacing: 2px;
 }
 
-/* Turn pill  */
+/* Turn strip */
 .turn-strip {
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   margin-bottom: 1.25rem;
+  position: relative;
 }
 
+/* Turn pill */
 .turn-pill {
   display: inline-flex;
   align-items: center;
@@ -228,4 +265,33 @@
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.3; transform: scale(0.7); }
+}
+
+/* Streak toast */
+.streak-toast {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 2px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  opacity: 0;
+  transform: scale(0.8) translateY(4px);
+  transition: opacity 0.2s var(--ease-spring), transform 0.2s var(--ease-spring);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.streak-toast.visible {
+  opacity: 1;
+  transform: none;
+}
+.streak-toast.you {
+  background: rgba(127,119,221,0.12);
+  border-color: rgba(127,119,221,0.4);
+  color: var(--you-200);
+}
+.streak-toast.ai {
+  background: rgba(216,90,48,0.12);
+  border-color: rgba(216,90,48,0.4);
+  color: var(--ai-200);
 }
