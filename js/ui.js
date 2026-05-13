@@ -3,7 +3,7 @@
 
 const UI = {
 
-  // Element references 
+  // Element references
   board:         () => document.getElementById('board'),
   youScoreEl:    () => document.getElementById('you-score'),
   aiScoreEl:     () => document.getElementById('ai-score'),
@@ -14,14 +14,18 @@ const UI = {
   turnPill:      () => document.getElementById('turn-pill'),
   resultBanner:  () => document.getElementById('result-banner'),
   diffSelect:    () => document.getElementById('diff'),
+  themeSelect:   () => document.getElementById('theme'),
+  streakToast:   () => document.getElementById('streak-toast'),
+  hintBtn:       () => document.getElementById('btn-hint'),
 
-  // Build a single card element 
-  makeCard(emoji, index) {
+  // Build a single card element
+  makeCard(symbol, index) {
     const card = document.createElement('div');
     card.className = 'card';
-    card.dataset.emoji = emoji;
+    card.dataset.emoji = symbol;
     card.dataset.idx   = index;
     card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
     card.setAttribute('aria-label', 'Memory card, face down');
     card.innerHTML = `
       <div class="card-inner">
@@ -34,32 +38,34 @@ const UI = {
             </svg>
           </div>
         </div>
-        <div class="card-face card-front" data-owner="">${emoji}</div>
+        <div class="card-face card-front" data-owner="">${symbol}</div>
       </div>`;
     return card;
   },
 
-  // Render the board 
+  // Render the board
   renderBoard(deck, cols, onFlip) {
     const board = UI.board();
     board.innerHTML = '';
     board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-    deck.forEach((emoji, i) => {
-      const card = UI.makeCard(emoji, i);
+    // Enable pinch-zoom on mobile via touch-action
+    board.style.touchAction = 'pan-y pinch-zoom';
+    deck.forEach((symbol, i) => {
+      const card = UI.makeCard(symbol, i);
       card.addEventListener('click', () => onFlip(card));
       board.appendChild(card);
     });
   },
 
-  // Score display 
-  updateScore(youScore, aiScore, total) {
+  // Score display (instant, for resets)
+  updateScore(youScore, aiScore) {
     UI.youScoreEl().textContent = youScore;
     UI.aiScoreEl().textContent  = aiScore;
     UI.youPairsEl().textContent = `${youScore} pair${youScore !== 1 ? 's' : ''}`;
     UI.aiPairsEl().textContent  = `${aiScore} pair${aiScore !== 1 ? 's' : ''}`;
   },
 
-  // Active player highlight 
+  // Active player highlight
   setActive(who) {
     UI.youCard().classList.remove('you-active', 'ai-active');
     UI.aiCard().classList.remove('you-active', 'ai-active');
@@ -78,12 +84,12 @@ const UI = {
   },
 
   // Card flip / hide 
-  flipCard(card)  { card.classList.add('flipped'); },
-  hideCard(card)  { card.classList.remove('flipped', 'ai-peek'); },
-  peekCard(card)  { card.classList.add('flipped', 'ai-peek'); },
-  unpeekCard(card){ card.classList.remove('ai-peek'); },
+  flipCard(card)   { card.classList.add('flipped'); },
+  hideCard(card)   { card.classList.remove('flipped', 'ai-peek'); },
+  peekCard(card)   { card.classList.add('flipped', 'ai-peek'); },
+  unpeekCard(card) { card.classList.remove('ai-peek'); },
 
-  // Mark matched 
+  // Mark matched
   matchCards(a, b, who) {
     a.classList.remove('flipped'); b.classList.remove('flipped');
     a.classList.add(`matched-${who}`); b.classList.add(`matched-${who}`);
@@ -94,22 +100,50 @@ const UI = {
     b.setAttribute('aria-label', `Matched card — ${b.dataset.emoji}`);
   },
 
-  // Result banner 
+  // Streak toast
+  showStreak(who, count) {
+    const toast = UI.streakToast();
+    if (!toast) return;
+    const fire = count >= 5 ? '🔥🔥' : '🔥';
+    toast.textContent = `${fire} ×${count} streak`;
+    toast.className = `streak-toast ${who} visible`;
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => {
+      toast.classList.remove('visible');
+    }, 1600);
+  },
+
+  hideStreak() {
+    const toast = UI.streakToast();
+    if (toast) toast.classList.remove('visible');
+  },
+
+  // Hint button 
+  updateHints(left) {
+    const btn = UI.hintBtn();
+    if (!btn) return;
+    if (left <= 0) {
+      btn.disabled = true;
+      btn.textContent = 'No hints';
+    } else {
+      btn.disabled = false;
+      btn.textContent = `💡 Hint (${left})`;
+    }
+  },
+
+  // Result banner
   showResult(youScore, aiScore) {
     const banner = UI.resultBanner();
 
     let cls, title, sub;
     if (youScore > aiScore) {
-      cls = 'win';
-      title = 'Victory!';
+      cls = 'win'; title = 'Victory!';
       sub = `You outplayed MNMX ${youScore} to ${aiScore}`;
     } else if (aiScore > youScore) {
-      cls = 'lose';
-      title = 'MNMX wins';
+      cls = 'lose'; title = 'MNMX wins';
       sub = `MNMX dominated ${aiScore} to ${youScore}. Rematch?`;
     } else {
-      cls = 'draw';
-      title = 'Draw!';
+      cls = 'draw'; title = 'Draw!';
       sub = `${youScore} pairs each — too close to call`;
     }
 
@@ -135,7 +169,6 @@ const UI = {
       <button class="btn-play-again" id="btn-play-again">↺ &nbsp;Play again</button>
     `;
     document.getElementById('btn-play-again').addEventListener('click', () => Game.start());
-    // Force reflow so the transition
     void banner.offsetWidth;
     banner.classList.add('visible');
   },
@@ -143,14 +176,13 @@ const UI = {
   hideResult() {
     const b = UI.resultBanner();
     b.classList.remove('visible');
-    // Clear content after transition
     b.innerHTML = '';
     b.className = 'result-banner';
   },
 
   // Reset score cards to neutral 
   resetScoreCards() {
-    UI.youCard().classList.remove('you-active','ai-active');
-    UI.aiCard().classList.remove('you-active','ai-active');
+    UI.youCard().classList.remove('you-active', 'ai-active');
+    UI.aiCard().classList.remove('you-active', 'ai-active');
   },
 };
