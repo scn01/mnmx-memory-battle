@@ -184,26 +184,6 @@ No installation or build process required.
 
 ---
 
-## License
-
-MIT License
-
-Feel free to fork, modify, and improve the project.
-
----
-
-## Screenshots
-
-Add screenshots or GIFs here after publishing.
-
-Example:
-
-```md
-![Gameplay Screenshot](assets/preview.png)
-```
-
----
-
 ## Deploying with GitHub Pages
 
 1. Push the repo to GitHub
@@ -218,7 +198,7 @@ Example:
 Your game will be live at:
 
 ```txt
-https://YOUR_USERNAME.github.io/mnmx-memory-battle/
+https://scn01.github.io/mnmx-memory-battle/
 ```
 
 ---
