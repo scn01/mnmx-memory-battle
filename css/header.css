@@ -1,0 +1,231 @@
+/* 
+   MNMX MEMORY BATTLE — header.css
+   Header, brand, controls, scoreboard, turn pill */
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-1);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 3px;
+  color: var(--text-1);
+  line-height: 1;
+}
+
+.brand-name .accent { color: var(--you-400); }
+.brand-name .x      { color: var(--ai-400); }
+
+.brand-tagline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+
+/* Controls row  */
+.header-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.select-diff {
+  appearance: none;
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 8px 32px 8px 12px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2355555f' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.select-diff:hover {
+  border-color: var(--border-3);
+  background-color: var(--surface-3);
+}
+.select-diff:focus {
+  outline: none;
+  border-color: var(--you-400);
+}
+
+/* New game button  */
+.btn-new {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-3);
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.btn-new:hover  { background: var(--surface-4); border-color: var(--border-3); }
+.btn-new:active { transform: scale(0.96); }
+
+.btn-new svg {
+  width: 14px; height: 14px;
+  transition: transform 0.4s var(--ease-out);
+}
+.btn-new:hover svg { transform: rotate(-180deg); }
+
+/*  Scoreboard  */
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.score-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-lg);
+  padding: 16px 18px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.score-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.score-card.you-active {
+  border-color: rgba(127,119,221,0.5);
+  box-shadow: 0 0 0 1px rgba(127,119,221,0.3), inset 0 0 30px rgba(127,119,221,0.05);
+}
+.score-card.ai-active {
+  border-color: rgba(216,90,48,0.5);
+  box-shadow: 0 0 0 1px rgba(216,90,48,0.3), inset 0 0 30px rgba(216,90,48,0.05);
+}
+
+.score-card.right { text-align: right; }
+
+.score-who {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.score-card.right .score-who { justify-content: flex-end; }
+
+.score-pip {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.you .score-pip  { background: var(--you-400); }
+.ai  .score-pip  { background: var(--ai-400); }
+
+.score-number {
+  font-family: var(--font-display);
+  font-size: 48px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: var(--text-1);
+}
+
+.score-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+.vs-label {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+}
+
+/* Turn pill  */
+.turn-strip {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.turn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid;
+  animation: pill-in 0.25s var(--ease-spring);
+}
+
+@keyframes pill-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.95); }
+  to   { opacity: 1; transform: none; }
+}
+
+.turn-pill.you  {
+  background: rgba(127,119,221,0.08);
+  border-color: rgba(127,119,221,0.35);
+  color: var(--you-200);
+}
+.turn-pill.ai   {
+  background: rgba(216,90,48,0.08);
+  border-color: rgba(216,90,48,0.35);
+  color: var(--ai-200);
+}
+.turn-pill.done {
+  background: rgba(29,158,117,0.08);
+  border-color: rgba(29,158,117,0.3);
+  color: var(--teal-l);
+}
+
+.pulse-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.3; transform: scale(0.7); }
+}

@@ -1,0 +1,149 @@
+/* 
+   MNMX MEMORY BATTLE — result.css
+   Result banner, footer, utility classes */
+
+/* Result banner */
+.result-banner {
+  border-radius: var(--r-xl);
+  padding: 2rem 1.75rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.result-banner.visible {
+  animation: banner-in 0.4s var(--ease-spring) forwards;
+}
+
+@keyframes banner-in {
+  from { opacity: 0; transform: scale(0.94) translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.result-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    currentColor 0,
+    currentColor 1px,
+    transparent 0,
+    transparent 50%
+  );
+  background-size: 12px 12px;
+}
+
+.result-banner.win {
+  background: rgba(127,119,221,0.07);
+  border-color: rgba(127,119,221,0.3);
+  color: var(--you-200);
+}
+.result-banner.lose {
+  background: rgba(216,90,48,0.07);
+  border-color: rgba(216,90,48,0.3);
+  color: var(--ai-200);
+}
+.result-banner.draw {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--border-2);
+  color: var(--text-2);
+}
+
+.result-title {
+  font-family: var(--font-display);
+  font-size: 52px;
+  letter-spacing: 4px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.result-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.65;
+  margin-bottom: 1.5rem;
+}
+
+.result-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.result-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.result-stat-val {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+.result-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+.btn-play-again {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 100px;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  opacity: 0.8;
+}
+.btn-play-again:hover  { background: rgba(255,255,255,0.07); opacity: 1; }
+.btn-play-again:active { transform: scale(0.96); }
+
+/* Footer */
+.site-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--text-3);
+}
+.footer-brand span { color: var(--you-400); }
+
+.footer-note {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+/* Utility */
+.hidden { display: none !important; }
