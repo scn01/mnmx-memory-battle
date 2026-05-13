@@ -43,6 +43,17 @@
 .hs-sep       { color: var(--text-3); }
 .hs-rate      { color: var(--text-3); margin-left: 4px; }
 
+/* ---- Meta row: streak + best scores ---- */
+.hs-meta-row {
+  padding: 8px 20px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border-1);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-3);
+}
+
 .btn-clear-hist {
   font-family: var(--font-mono);
   font-size: 10px;
