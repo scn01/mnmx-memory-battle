@@ -7,7 +7,6 @@
   <meta name="description" content="MNMX Memory Battle — flip cards and outsmart the AI opponent.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/board.css">
@@ -17,7 +16,7 @@
 <body>
 
 <div class="page">
-  <h1 class="sr-only">MNMX Memory Battle: flip cards to beat the AI</h1>
+  <h1 class="sr-only">MNMX Memory Battle — flip cards to beat the AI</h1>
 
   <!-- Header -->
   <header class="site-header">
@@ -26,9 +25,9 @@
       <div class="brand-tagline">memory battle</div>
     </div>
     <div class="header-controls">
-      <select class="select-diff" id="diff" aria-label="Difficulty">
-        <!-- Populated by app.js -->
-      </select>
+      <select class="select-theme" id="theme" aria-label="Card theme"></select>
+      <select class="select-diff"  id="diff"  aria-label="Difficulty"></select>
+      <button class="btn-hint" id="btn-hint" disabled aria-label="Use hint">💡 Hint</button>
       <button class="btn-new" onclick="Game.start()" aria-label="New game">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -63,19 +62,20 @@
     </div>
   </div>
 
-  <!-- Turn indicator -->
+  <!-- Turn indicator + streak toast -->
   <div class="turn-strip" role="status" aria-live="polite">
     <div class="turn-pill you" id="turn-pill">
       <span class="pulse-dot" aria-hidden="true"></span>
       Your turn
     </div>
+    <div class="streak-toast" id="streak-toast" aria-live="polite"></div>
   </div>
 
   <!-- Game board -->
   <div class="board" id="board" role="grid" aria-label="Memory card grid"></div>
 
   <!-- Result -->
-  <div id="result-banner" class="result-banner hidden" role="alert" aria-live="assertive"></div>
+  <div id="result-banner" class="result-banner" role="alert" aria-live="assertive"></div>
 
   <!-- History panel -->
   <section class="history-panel" id="history-panel">
@@ -91,6 +91,7 @@
       </div>
       <button class="btn-clear-hist" id="btn-clear-hist">Clear</button>
     </div>
+    <div class="hs-meta-row" id="hs-meta" style="display:none"></div>
     <div class="history-list" id="history-list">
       <div class="history-empty">No games yet — finish a game to see it here.</div>
     </div>
@@ -105,6 +106,7 @@
 
 <!-- Scripts -->
 <script src="js/config.js"></script>
+<script src="js/sound.js"></script>
 <script src="js/ai.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game.js"></script>
